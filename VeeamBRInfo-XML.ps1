@@ -20,6 +20,7 @@
     .EXAMPLE
     Run this script with task scheduler use powershell.exe as program and the following parameters:
     -NoLogo -NonInteractive -ExecutionPolicy Bypass -File "C:\Script\VeeamBRInfo-XML.ps1"
+    Highest privileges mandantory.
     This will place a file in C:\Temp\VeeamResults where it can be retreived by the PRTG sensor
 #>
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
