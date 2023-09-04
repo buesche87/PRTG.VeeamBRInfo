@@ -137,8 +137,8 @@ function Set-XMLContent {
     $result+=   "<result>" + $nl
     $result+=   "  <channel>AutoUpdate</channel>" + $nl
     $result+=   "  <value>$($VeeamInfos.AutoUpdate)</value>" + $nl
-    $result+=   "  <showChart>1</showChart>" + $nl
-    $result+=   "  <showTable>1</showTable>" + $nl
+    $result+=   "  <showChart>0</showChart>" + $nl
+    $result+=   "  <showTable>0</showTable>" + $nl
     $result+=   "</result>" + $nl
 
     $result+=   "<result>" + $nl
