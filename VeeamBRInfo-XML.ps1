@@ -154,8 +154,9 @@ function Get-LicenseInfo {
 
     # License status
     $VeeamInfos.LicenseStatus  = $License.Status
-    $VeeamInfos.ExpirationDate = $License.ExpirationDate
-    $VeeamInfos.ExpirationDays = ($License.ExpirationDate - (Get-Date)).Days
+    if ($License.SupportExpirationDate) {$VeeamInfos.ExpirationDate = $License.SupportExpirationDate}
+    if ($License.ExpirationDate) {$VeeamInfos.ExpirationDate = $License.ExpirationDate}
+    $VeeamInfos.ExpirationDays = ($VeeamInfos.ExpirationDate - (Get-Date)).Days
     $VeeamInfos.Edition        = $License.Edition
     $VeeamInfos.SupportId      = $License.SupportId
 
