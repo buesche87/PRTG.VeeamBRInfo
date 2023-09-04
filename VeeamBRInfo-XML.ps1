@@ -26,6 +26,10 @@
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 # Use TLS1.2 for Invoke-Webrequest
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+if (-not (Get-Module -ListAvailable -Name Veeam.Backup.PowerShell)) {
+    # Include PS-Snapin from Veeam Backup & Replication V10
+    Add-PSSnapin -Name VeeamPSSnapIn
+}
 
 # General parameters
 $UpdatePath       = "https://raw.githubusercontent.com/buesche87/PRTG.VeeamBRInfo/main/VeeamBRInfo-XML.ps1"

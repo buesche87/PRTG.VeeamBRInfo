@@ -26,7 +26,7 @@
 
     .NOTES
     Author  : Andreas Bucher
-    Version : 0.9.1
+    Version : 0.9.2
     Purpose : XML-Part of the PRTG-Sensor VeeamBRInfo
 
     .EXAMPLE
@@ -99,8 +99,8 @@ if ( -NOT (Test-Path -Path "$xmlResultPath")) { Set-ErrorXML "Share $xmlResultPa
 # Throw error if the result xml is not present
 elseif ( -NOT (Test-Path -Path "$xmlResultPath\$resultxml")) { Set-ErrorXML "$resultxml auf Share $xmlResultPath nicht vorhanden..." }
 
-# Throw an error if the result xml is older than 6 hours
-elseif ( -NOT (Test-Path -Path "$xmlResultPath\$resultxml" -NewerThan (Get-Date).AddHours(-6) )) { Set-ErrorXML "$resultxml auf Share $xmlResultPath älter als 36h, Task Scheduler prüfen." }
+# Throw an error if the result xml is older than 36 hours
+elseif ( -NOT (Test-Path -Path "$xmlResultPath\$resultxml" -NewerThan (Get-Date).AddHours(-36) )) { Set-ErrorXML "$resultxml auf Share $xmlResultPath älter als 36h, Task Scheduler prüfen." }
 
 # You want to land here
 elseif( $xmlContent = Get-Content -Path "$xmlResultPath\$resultxml" ) { return $xmlContent }
