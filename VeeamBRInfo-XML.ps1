@@ -29,7 +29,8 @@
 # General parameters
 $UpdatePath       = "https://raw.githubusercontent.com/buesche87/PRTG.VeeamBRInfo/main/VeeamBRInfo-XML.ps1"
 $nl               = [Environment]::NewLine
-$resultFolder     = "C:\Temp\VeeamResults" # Output location for xml files
+$resultFolder     = "C:\Temp\VeeamResults"
+$resultxml        = "VeeamBRInfo.xml"
 
 # PRTG parameters
 $ExpWarning = 30 # Warninglevel in days for license expiry
@@ -141,7 +142,7 @@ function Set-XMLContent {
 
     # Write XML-File
     if(-not (test-path $resultFolder)){ New-Item -Path $resultFolder -ItemType Directory }
-    $xmlFilePath = "$resultFolder\VeeamInfo.xml"
+    $xmlFilePath = "$resultFolder\$resultxml"
     $result | Out-File $xmlFilePath -Encoding utf8
 
 }

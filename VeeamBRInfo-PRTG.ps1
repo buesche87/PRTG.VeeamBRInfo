@@ -54,7 +54,7 @@ $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 # Variables
 $rootpath  = "\\$HostName\c$\Temp\VeeamResults"
-$resultxml = "VeeamInfo.xml"
+$resultxml = "VeeamBRInfo.xml"
 $nl        = [Environment]::NewLine
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
 # Return Error-XML
