@@ -14,7 +14,7 @@
 
     .NOTES
     Author  : Andreas Bucher
-    Version : 0.9.1
+    Version : 0.9.2
     Purpose : XML-Part of the PRTG-Sensor VeeamBRInfo
 
     .EXAMPLE
@@ -52,6 +52,7 @@ $VeeamInfos = [PSCustomObject]@{
     Build             = 0
     VersionInfo       = ""
     SupportId         = 0
+    AutoUpdate        = 0
     Edition           = ""
     LicenseStatus     = ""
     ExpirationDate    = 0
@@ -134,6 +135,13 @@ function Set-XMLContent {
     $result+=   "</result>" + $nl
 
     $result+=   "<result>" + $nl
+    $result+=   "  <channel>AutoUpdate</channel>" + $nl
+    $result+=   "  <value>$($VeeamInfos.AutoUpdate)</value>" + $nl
+    $result+=   "  <showChart>1</showChart>" + $nl
+    $result+=   "  <showTable>1</showTable>" + $nl
+    $result+=   "</result>" + $nl
+
+    $result+=   "<result>" + $nl
     $result+=   "  <channel>$($VeeamInfos.UsedTxt)</channel>" + $nl
     $result+=   "  <value>$($VeeamInfos.Used)</value>" + $nl
     $result+=   "  <LimitMaxWarning>$($VeeamInfos.Licensed)</LimitMaxWarning>" + $nl
@@ -164,6 +172,7 @@ function Get-LicenseInfo {
     $VeeamInfos.ExpirationDays = ($VeeamInfos.ExpirationDate - (Get-Date)).Days
     $VeeamInfos.Edition        = $License.Edition
     $VeeamInfos.SupportId      = $License.SupportId
+    $VeeamInfos.AutoUpdate     = $License.AutoUpdateEnabled
 
     # Check if socket or instance license is used
     if ($License.SocketLicenseSummary.LicensedSocketsNumber -ne 0) {
