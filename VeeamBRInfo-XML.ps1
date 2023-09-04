@@ -27,7 +27,7 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 # General parameters
-$UpdatePath       = "https://raw.githubusercontent.com/buesche87/PRTG.VeeamInfo/main/VeeamInfo-XML.ps1"
+$UpdatePath       = "https://raw.githubusercontent.com/buesche87/PRTG.VeeamBRInfo/main/VeeamBRInfo-XML.ps1"
 $nl               = [Environment]::NewLine
 $resultFolder     = "C:\Temp\VeeamResults" # Output location for xml files
 
