@@ -172,7 +172,7 @@ function Get-LicenseInfo {
     $VeeamInfos.ExpirationDays = ($VeeamInfos.ExpirationDate - (Get-Date)).Days
     $VeeamInfos.Edition        = $License.Edition
     $VeeamInfos.SupportId      = $License.SupportId
-    $VeeamInfos.AutoUpdate     = $License.AutoUpdateEnabled
+    if ($License.AutoUpdateEnabled) { $VeeamInfos.AutoUpdate = 1 }
 
     # Check if socket or instance license is used
     if ($License.SocketLicenseSummary.LicensedSocketsNumber -ne 0) {
