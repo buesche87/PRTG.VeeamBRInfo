@@ -26,7 +26,7 @@
 
     .NOTES
     Author  : Andreas Bucher
-    Version : 0.9.3
+    Version : 1.0.0
     Purpose : XML-Part of the PRTG-Sensor VeeamBRInfo
 
     .EXAMPLE
