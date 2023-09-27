@@ -1,28 +1,30 @@
 ﻿<#
     .SYNOPSIS
-    This script checks the license and version of Veeam Backup & Replication.
-    It collects detailed information and creates an XML file as output.
+		This script checks the license and version of Veeam Backup & Replication.
+		It collects detailed information and creates an XML file as output.
+		The XML will be placeed in C:\Temp\VeeamResults where it can be retreived by the PRTG-Sensor
 
     .INPUTS
-    None
+		None
 
     .OUTPUTS
-    The script creates a XML file formated for PRTG.
+		The script creates a XML file formated for PRTG.
 
     .LINK
-    https://raw.githubusercontent.com/tn-ict/Public/master/Disclaimer/DISCLAIMER
+		Disclamer: https://raw.githubusercontent.com/tn-ict/Public/master/Disclaimer/DISCLAIMER
 
     .NOTES
-    Author  : Andreas Bucher
-    Version : 1.0.0
-    Purpose : XML-Part of the PRTG-Sensor VeeamBRInfo
+		Author:  Andreas Bucher
+		Version: 1.0.0
+		Date:    27.09.2023
+		Purpose: XML-Part of the PRTG-Sensor VeeamBRInfo
 
     .EXAMPLE
-    Run this script with task scheduler use powershell.exe as program and the following parameters:
-    -NoLogo -NonInteractive -ExecutionPolicy Bypass -File "C:\Script\VeeamBRInfo-XML.ps1"
-    Highest privileges mandantory.
-    This will place a file in C:\Temp\VeeamResults where it can be retreived by the PRTG sensor
+		powershell.exe -NoLogo -NonInteractive -ExecutionPolicy Bypass -File "C:\Script\VeeamBRInfo-XML.ps1"
+		
+		Run this script with task scheduler with highest privileges. Use powershell.exe as program and the parameters as described
 #>
+
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 # Use TLS1.2 for Invoke-Webrequest
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
