@@ -15,7 +15,7 @@
 
     .NOTES
         Author:  Andreas Bucher
-        Version: 1.0.0
+        Version: 1.1.0
         Date:    27.09.2023
         Purpose: XML-Part of the PRTG-Sensor VeeamBRInfo
 
@@ -39,8 +39,8 @@ $resultFolder     = "C:\Temp\VeeamResults"
 $resultxml        = "VeeamBRInfo.xml"
 
 # PRTG parameters
-$ExpWarning = 30 # Warninglevel in days for license expiry
-$ExpError   = 14 # Errorlevel in days for license expiry
+$ExpWarning = 30 # Warninglevel in days for license and ssl certificate expiry
+$ExpError   = 14 # Errorlevel in days for license and ssl certificate expiry
 
 # Define VeeamInfos object and parameters
 $VeeamInfos = [PSCustomObject]@{
@@ -62,6 +62,7 @@ $VeeamInfos = [PSCustomObject]@{
     LicensedTxt       = ""
     Used              = 0
     UsedTxt           = ""
+    SSLExpDays        = 0
 }
 
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
@@ -116,7 +117,7 @@ function Set-XMLContent {
     $result+=   "</result>" + $nl
 
     $result+=   "<result>" + $nl
-    $result+=   "  <channel>License expiry</channel>" + $nl
+    $result+=   "  <channel>Lizenz Gültigkeit</channel>" + $nl
     $result+=   "  <value>$($VeeamInfos.ExpirationDays)</value>" + $nl
     $result+=   "  <CustomUnit>Days</CustomUnit>" + $nl
     $result+=   "  <LimitMinWarning>$ExpWarning</LimitMinWarning>" + $nl
@@ -147,6 +148,19 @@ function Set-XMLContent {
     $result+=   "  <value>$($VeeamInfos.Used)</value>" + $nl
     $result+=   "  <LimitMaxWarning>$($VeeamInfos.Licensed)</LimitMaxWarning>" + $nl
     $result+=   "  <LimitWarningMsg>Anzahl Lizenzen aufgebraucht</LimitWarningMsg>" + $nl
+    $result+=   "  <LimitMode>1</LimitMode>" + $nl
+    $result+=   "  <showChart>1</showChart>" + $nl
+    $result+=   "  <showTable>1</showTable>" + $nl
+    $result+=   "</result>" + $nl
+
+    $result+=   "<result>" + $nl
+    $result+=   "  <channel>SSL Zertifikat Gültigkeit</channel>" + $nl
+    $result+=   "  <value>$($VeeamInfos.SSLExpDays)</value>" + $nl
+    $result+=   "  <CustomUnit>Days</CustomUnit>" + $nl
+    $result+=   "  <LimitMinWarning>$ExpWarning</LimitMinWarning>" + $nl
+    $result+=   "  <LimitWarningMsg>SSL Zertifikat läuft aus</LimitWarningMsg>" + $nl
+    $result+=   "  <LimitMinError>$ExpError</LimitMinError>" + $nl
+    $result+=   "  <LimitErrorMsg>SSL Zertifikat läuft aus</LimitErrorMsg>" + $nl
     $result+=   "  <LimitMode>1</LimitMode>" + $nl
     $result+=   "  <showChart>1</showChart>" + $nl
     $result+=   "  <showTable>1</showTable>" + $nl
@@ -227,6 +241,20 @@ function Get-VersionInfo {
 
     Return $VeeamInfos
 }
+# Get Veeam SSL Certificate
+function Get-SSLCertificate {
+    param(
+        $VeeamInfos
+    )
+
+    # Get SSL-Certificate
+    $SSLCertificate = Get-VBRBackupServerCertificate
+
+    $VeeamInfos.SSLExpDays = ($SSLCertificate.NotAfter - (Get-Date)).Days
+
+    Return $VeeamInfos
+}
+
 #-----------------------------------------------------------[Execute]------------------------------------------------------------
 
 # Get license infos
@@ -234,6 +262,7 @@ $License    = Get-VBRInstalledLicense
 $VeeamInfos = Get-LicenseInfo $License
 $VeeamInfos = Get-LicenseStatus $VeeamInfos
 $VeeamInfos = Get-VersionInfo $VeeamInfos
+$VeeamInfos = Get-SSLCertificate $VeeamInfos
 
 # Return XML
 Set-XMLContent $VeeamInfos
